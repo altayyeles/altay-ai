@@ -15,7 +15,7 @@ It leverages **Google's Gemini 2.5 Flash** model for high-speed, intelligent res
 ## 📸 Interface
 
 ![Interface Screenshot](screenshot.png)
-*(Note: Provide a screenshot of your chat interface here)*
+
 
 ## 🚀 Key Features
 
