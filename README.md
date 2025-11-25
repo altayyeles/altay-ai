@@ -148,8 +148,3 @@ If you want to clone and run this project:
 
 *Built with ❤️ and ☕ by a Mathematical Engineer.*
 
-```
-
-###
-Bu README dosyasında **Mermaid** grafiği (Architecture kısmı) kullandım.🚀
-```
