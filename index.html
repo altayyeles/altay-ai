@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* --- Arka Plan Animasyonu (Aurora Effect) --- */
+        /* Arka Plan Efekti */
         .background-glow {
             position: absolute;
             width: 100vw;
@@ -59,7 +59,7 @@
             100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* --- Ana Konteyner (Glassmorphism) --- */
+        /* Ana Konteyner */
         .chat-container {
             width: 95%;
             max-width: 900px;
@@ -73,10 +73,9 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            position: relative;
         }
 
-        /* --- Header --- */
+        /* Header */
         .header {
             padding: 20px 30px;
             border-bottom: 1px solid var(--glass-border);
@@ -121,7 +120,7 @@
         }
         .social-links a:hover { color: white; transform: scale(1.1); }
 
-        /* --- Chat Alanı --- */
+        /* Chat Alanı */
         #chat-box {
             flex: 1;
             padding: 30px;
@@ -132,7 +131,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Scrollbar Tasarımı */
         #chat-box::-webkit-scrollbar { width: 6px; }
         #chat-box::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
@@ -142,15 +140,12 @@
             border-radius: 18px;
             font-size: 0.95rem;
             line-height: 1.6;
-            position: relative;
             animation: fadeIn 0.4s ease-out forwards;
             opacity: 0;
             transform: translateY(10px);
         }
         
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
         .bot-message {
             align-self: flex-start;
@@ -169,13 +164,38 @@
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
-        /* --- Öneri Butonları (Chips) --- */
+        /* Typing Indicator (DÜZELTİLDİ: Artık gizli başlayacak) */
+        .typing-indicator {
+            display: none; 
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Öneriler */
         .suggestions {
             display: flex;
             gap: 10px;
             padding: 0 30px 15px 30px;
             overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
         .suggestions::-webkit-scrollbar { display: none; }
         
@@ -196,7 +216,7 @@
             border-color: var(--primary-color);
         }
 
-        /* --- Input Alanı --- */
+        /* Input Alanı */
         .input-area {
             padding: 20px 30px;
             background: rgba(0, 0, 0, 0.2);
@@ -205,7 +225,6 @@
             gap: 15px;
             align-items: center;
         }
-        
         input {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
@@ -217,11 +236,7 @@
             outline: none;
             transition: 0.3s;
         }
-        input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(0, 242, 234, 0.1);
-        }
-
+        input:focus { border-color: var(--primary-color); }
         button {
             width: 50px;
             height: 50px;
@@ -236,43 +251,12 @@
             align-items: center;
             justify-content: center;
         }
-        button:hover {
-            transform: scale(1.05);
-            background: #fff;
-            box-shadow: 0 0 15px var(--primary-color);
-        }
+        button:hover { transform: scale(1.05); background: #fff; }
 
-        /* --- Typing Indicator --- */
-        .typing-indicator {
-            display: none;
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-            margin-bottom: 20px;
-        }
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-
-        /* Mobil Uyum */
         @media (max-width: 600px) {
             .chat-container { width: 100%; height: 100%; border-radius: 0; border: none; }
             .header { padding: 15px; }
             .input-area { padding: 15px; }
-            .info-text p { font-size: 0.7rem; }
-            .chip { font-size: 0.75rem; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -287,9 +271,7 @@
     <div class="chat-container">
         <div class="header">
             <div class="profile-info">
-                <div class="avatar">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                 <div class="info-text">
                     <h1>Altay Yeles | AI Twin</h1>
                     <p>> Mathematical Engineer_</p>
@@ -306,10 +288,10 @@
                 Merhaba! Ben <strong>Altay'ın dijital ikiziyim.</strong> 🚀<br>
                 Onun projeleri, teknik yetkinlikleri veya staj deneyimleri hakkında aklına gelen her şeyi sorabilirsin.
             </div>
-        </div>
-
-        <div class="typing-indicator" id="typing-indicator">
-            <span></span><span></span><span></span>
+            
+            <div class="typing-indicator" id="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
         </div>
 
         <div class="suggestions">
@@ -317,7 +299,6 @@
             <div class="chip" onclick="sendQuickMessage('Hangi teknolojileri kullanıyorsun?')">🛠️ Tech Stack</div>
             <div class="chip" onclick="sendQuickMessage('Bluesense stajında ne yaptın?')">👁️ Bluesense Stajı</div>
             <div class="chip" onclick="sendQuickMessage('Matematik Mühendisliği nedir?')">📐 Bölüm Hakkında</div>
-            <div class="chip" onclick="sendQuickMessage('İletişim bilgileri')">📬 İletişim</div>
         </div>
 
         <div class="input-area">
@@ -326,16 +307,14 @@
         </div>
     </div>
 
-<script>
-    // --- API URL'İ BURAYA YAPIŞTIR ---
-    const WORKER_URL = "altay-ai-bot.altay-yeles.workers.dev";
-    // ---------------------------------
+<script>    
+    const WORKER_URL = "altay-ai-bot.altay-yeles.workers.dev"; 
+    // -----------------------------------------------------
 
     const chatBox = document.getElementById("chat-box");
     const userInput = document.getElementById("user-input");
     const typingIndicator = document.getElementById("typing-indicator");
 
-    // Hazır butonlara tıklanınca çalışır
     function sendQuickMessage(text) {
         userInput.value = text;
         sendMessage();
@@ -345,11 +324,9 @@
         const message = userInput.value.trim();
         if (!message) return;
 
-        // Kullanıcı mesajını ekle
         addMessage(message, "user-message");
         userInput.value = "";
 
-        // Yükleniyor...
         showTyping(true);
 
         try {
@@ -362,14 +339,14 @@
             const data = await response.json();
             showTyping(false);
             
-            // Bot cevabını ekle (Hafif gecikme ile daha doğal durur)
             setTimeout(() => {
                 addMessage(formatText(data.reply), "bot-message");
             }, 100);
 
         } catch (error) {
             showTyping(false);
-            addMessage("Sunucuyla iletişim kurulamadı. İnternet bağlantını kontrol et.", "bot-message");
+            console.error(error); // Hatayı konsola yazdır ki görelim
+            addMessage("Sunucu hatası: Cloudflare Worker linkini kontrol et.", "bot-message");
         }
     }
 
@@ -378,12 +355,13 @@
         div.className = `message ${className}`;
         div.innerHTML = text;
         
-        // Typing indicator'ın üstüne ekle (DOM manipulation trick)
+        // DÜZELTME: Artık typingIndicator chatBox'ın içinde olduğu için bu satır hata vermeyecek
         chatBox.insertBefore(div, typingIndicator); 
         scrollToBottom();
     }
 
     function showTyping(show) {
+        // DÜZELTME: Flex yapısını bozmamak için display kontrolü
         typingIndicator.style.display = show ? "block" : "none";
         scrollToBottom();
     }
@@ -396,11 +374,10 @@
         if (e.key === "Enter") sendMessage();
     }
 
-    // Basit markdown benzeri formatlama (Bold ve Satır başı)
     function formatText(text) {
         return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold yap
-            .replace(/\n/g, '<br>'); // Satır başı yap
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
     }
 </script>
 
