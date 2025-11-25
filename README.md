@@ -68,27 +68,8 @@ Email: altay.yeles@std.yildiz.edu.tr
 LinkedIn: Altay Yeles
 
 Built with ❤️ and ☕ by a Mathematical Engineer.
-Harika, bir GitHub projesinin vitrini **README** dosyasıdır. İK uzmanları veya diğer yazılımcılar koda bakmadan önce burayı okur.
-
-Senin için **profesyonel, teknik yetkinliğini vurgulayan (Cloudflare, Serverless, GenAI kullanımı)** ve İngilizce (global standart) bir README hazırladım.
 
 -----
-
-### 1\. Repository Description (Kısa Açıklama)
-
-*GitHub'ın sağ tarafındaki "About" kısmına yapıştıracağın kısa yazı:*
-
-> **English:** An interactive AI Digital Twin powered by Google Gemini 2.5 Flash and Cloudflare Workers. It acts as a personal assistant to showcase my CV, projects, and skills.
->
-> **Türkçe:** Google Gemini 2.5 Flash ve Cloudflare Workers ile güçlendirilmiş, CV ve projelerimi interaktif sunan Kişisel Yapay Zeka Asistanı.
-
------
-
-### 2\. `README.md` Dosyası
-
-Aşağıdaki kodu kopyala, projendeki `README.md` dosyasının içine yapıştır.
-
-*(Not: Projenin çalışan halinin bir ekran görüntüsünü alıp `screenshot.png` adıyla repoya yüklersen, aşağıdaki kodda yer alan görsel otomatik çalışır ve çok havalı durur.)*
 
 ````markdown
 # 🤖 Altay Yeles | AI Digital Twin
