@@ -120,6 +120,41 @@
         }
         .social-links a:hover { color: white; transform: scale(1.1); }
 
+        /* Language toggle */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+        }
+        .lang-btn {
+            width: 34px;
+            height: 26px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.10); }
+        .lang-btn.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 242, 234, 0.15);
+        }
+        .flag { font-size: 16px; line-height: 1; }
+
         /* Chat Alanı */
         #chat-box {
             flex: 1;
@@ -277,28 +312,42 @@
                     <p>> Mathematical Engineer_</p>
                 </div>
             </div>
-            <div class="social-links">
-                <a href="https://github.com/altayyeles" target="_blank"><i class="fa-brands fa-github"></i></a>
-                <a href="https://linkedin.com/in/altayyeles" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+
+            <!-- DÜZELTME: sağ üstte dil + sosyal -->
+            <div class="header-right">
+                <div class="lang-toggle" aria-label="Language toggle">
+                    <button class="lang-btn" id="lang-tr" type="button" title="Türkçe">
+                        <span class="flag" aria-hidden="true">🇹🇷</span>
+                    </button>
+                    <button class="lang-btn" id="lang-en" type="button" title="English">
+                        <span class="flag" aria-hidden="true">🇬🇧</span>
+                    </button>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/altayyeles" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://linkedin.com/in/altayyeles" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
             </div>
         </div>
 
         <div id="chat-box">
-            <div class="message bot-message">
+            <div class="message bot-message" id="welcome-message">
                 Merhaba! Ben <strong>Altay'ın dijital ikiziyim.</strong> 🚀<br>
                 Onun projeleri, teknik yetkinlikleri veya staj deneyimleri hakkında aklına gelen her şeyi sorabilirsin.
             </div>
-            
+
             <div class="typing-indicator" id="typing-indicator">
                 <span></span><span></span><span></span>
             </div>
         </div>
 
+        <!-- DÜZELTME: chip'lere id verdik ki metinleri değiştirelim -->
         <div class="suggestions">
-            <div class="chip" onclick="sendQuickMessage('Projelerinden ve GitHub repolarından bahset')">💻 Projeler</div>
-            <div class="chip" onclick="sendQuickMessage('Hangi stajları yaptın ve neler kattın?')">💼 Stajlar</div>
-            <div class="chip" onclick="sendQuickMessage('Teknik yetkinliklerin neler?')">🛠️ Tech Stack</div>
-            <div class="chip" onclick="sendQuickMessage('İletişim bilgilerini verir misin?')">📞 İletişim</div>
+            <div class="chip" id="chip-projects" onclick="sendQuickMessage(getQuickMessage('projects'))">💻 Projeler</div>
+            <div class="chip" id="chip-internships" onclick="sendQuickMessage(getQuickMessage('internships'))">💼 Stajlar</div>
+            <div class="chip" id="chip-tech" onclick="sendQuickMessage(getQuickMessage('tech'))">🛠️ Tech Stack</div>
+            <div class="chip" id="chip-contact" onclick="sendQuickMessage(getQuickMessage('contact'))">📞 İletişim</div>
         </div>
 
         <div class="input-area">
@@ -314,6 +363,75 @@
     const chatBox = document.getElementById("chat-box");
     const userInput = document.getElementById("user-input");
     const typingIndicator = document.getElementById("typing-indicator");
+
+    const langTrBtn = document.getElementById("lang-tr");
+    const langEnBtn = document.getElementById("lang-en");
+    const welcomeMessageEl = document.getElementById("welcome-message");
+
+    const chipProjects = document.getElementById("chip-projects");
+    const chipInternships = document.getElementById("chip-internships");
+    const chipTech = document.getElementById("chip-tech");
+    const chipContact = document.getElementById("chip-contact");
+
+    const I18N = {
+        tr: {
+            htmlLang: "tr",
+            inputPlaceholder: "Altay hakkında bir soru sor...",
+            welcomeHtml: "Merhaba! Ben <strong>Altay'ın dijital ikiziyim.</strong> 🚀<br>Onun projeleri, teknik yetkinlikleri veya staj deneyimleri hakkında aklına gelen her şeyi sorabilirsin.",
+            chips: { projects: "💻 Projeler", internships: "💼 Stajlar", tech: "🛠️ Tech Stack", contact: "📞 İletişim" },
+            quick: {
+                projects: "Projelerinden ve GitHub repolarından bahset",
+                internships: "Hangi stajları yaptın ve neler kattın?",
+                tech: "Teknik yetkinliklerin neler?",
+                contact: "İletişim bilgilerini verir misin?"
+            },
+            serverError: "Sunucu hatası: Cloudflare Worker linkini kontrol et."
+        },
+        en: {
+            htmlLang: "en",
+            inputPlaceholder: "Ask a question about Altay...",
+            welcomeHtml: "Hi! I'm <strong>Altay's digital twin.</strong> 🚀<br>You can ask anything about his projects, technical skills, or internship experience.",
+            chips: { projects: "💻 Projects", internships: "💼 Internships", tech: "🛠️ Tech Stack", contact: "📞 Contact" },
+            quick: {
+                projects: "Tell me about your projects and GitHub repositories",
+                internships: "Which internships did you do and what did you gain from them?",
+                tech: "What are your technical skills?",
+                contact: "Can you share your contact information?"
+            },
+            serverError: "Server error: please check the Cloudflare Worker URL."
+        }
+    };
+
+    const LANG_STORAGE_KEY = "altay-ai-lang";
+    let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "tr";
+
+    function applyLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem(LANG_STORAGE_KEY, lang);
+
+        document.documentElement.lang = I18N[lang].htmlLang;
+
+        // Toggle UI
+        langTrBtn.classList.toggle("active", lang === "tr");
+        langEnBtn.classList.toggle("active", lang === "en");
+
+        // Texts
+        userInput.placeholder = I18N[lang].inputPlaceholder;
+        welcomeMessageEl.innerHTML = I18N[lang].welcomeHtml;
+
+        chipProjects.textContent = I18N[lang].chips.projects;
+        chipInternships.textContent = I18N[lang].chips.internships;
+        chipTech.textContent = I18N[lang].chips.tech;
+        chipContact.textContent = I18N[lang].chips.contact;
+    }
+
+    function getQuickMessage(key) {
+        return I18N[currentLang].quick[key];
+    }
+
+    langTrBtn.addEventListener("click", () => applyLanguage("tr"));
+    langEnBtn.addEventListener("click", () => applyLanguage("en"));
+    applyLanguage(currentLang);
 
     function sendQuickMessage(text) {
         userInput.value = text;
@@ -333,20 +451,23 @@
             const response = await fetch(WORKER_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({
+                    message: message,
+                    lang: currentLang // DÜZELTME: backend'e dili gönder
+                })
             });
-            
+
             const data = await response.json();
             showTyping(false);
-            
+
             setTimeout(() => {
                 addMessage(formatText(data.reply), "bot-message");
             }, 100);
 
         } catch (error) {
             showTyping(false);
-            console.error(error); // Hatayı konsola yazdır ki görelim
-            addMessage("Sunucu hatası: Cloudflare Worker linkini kontrol et.", "bot-message");
+            console.error(error);
+            addMessage(I18N[currentLang].serverError, "bot-message");
         }
     }
 
@@ -354,14 +475,12 @@
         const div = document.createElement("div");
         div.className = `message ${className}`;
         div.innerHTML = text;
-        
-        // DÜZELTME: Artık typingIndicator chatBox'ın içinde olduğu için bu satır hata vermeyecek
-        chatBox.insertBefore(div, typingIndicator); 
+
+        chatBox.insertBefore(div, typingIndicator);
         scrollToBottom();
     }
 
     function showTyping(show) {
-        // DÜZELTME: Flex yapısını bozmamak için display kontrolü
         typingIndicator.style.display = show ? "block" : "none";
         scrollToBottom();
     }
