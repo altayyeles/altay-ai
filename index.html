@@ -120,7 +120,7 @@
         }
         .social-links a:hover { color: white; transform: scale(1.1); }
 
-        /* Language toggle */
+        /* Language toggle - update to show flag + label */
         .header-right {
             display: flex;
             align-items: center;
@@ -136,24 +136,27 @@
             border-radius: 14px;
         }
         .lang-btn {
-            width: 34px;
+            width: auto;              /* was: 34px */
+            min-width: 58px;
             height: 26px;
+            padding: 0 10px;          /* space for label */
+            gap: 6px;                 /* flag-label gap */
             border-radius: 10px;
             border: 1px solid transparent;
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-main);
             cursor: pointer;
-            display: flex;
+            display: inline-flex;     /* was: flex */
             align-items: center;
             justify-content: center;
-            padding: 0;
         }
-        .lang-btn:hover { background: rgba(255, 255, 255, 0.10); }
-        .lang-btn.active {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(0, 242, 234, 0.15);
+        .lang-text {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--text-main);
+            line-height: 1;
         }
-        .flag { font-size: 16px; line-height: 1; }
 
         /* Chat Alanı */
         #chat-box {
@@ -318,9 +321,12 @@
                 <div class="lang-toggle" aria-label="Language toggle">
                     <button class="lang-btn" id="lang-tr" type="button" title="Türkçe">
                         <span class="flag" aria-hidden="true">🇹🇷</span>
+                        <span class="lang-text">TR</span>
                     </button>
+
                     <button class="lang-btn" id="lang-en" type="button" title="English">
-                        <span class="flag" aria-hidden="true">🇬🇧</span>
+                        <span class="flag" aria-hidden="true">🇺🇸</span>
+                        <span class="lang-text">EN</span>
                     </button>
                 </div>
 
