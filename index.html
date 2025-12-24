@@ -120,7 +120,7 @@
         }
         .social-links a:hover { color: white; transform: scale(1.1); }
 
-        /* Language toggle - update to show flag + label */
+        /* Language toggle */
         .header-right {
             display: flex;
             align-items: center;
@@ -135,27 +135,45 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
         }
+        
+        /* GÜNCELLENEN BUTON STİLİ */
         .lang-btn {
-            width: auto;              /* was: 34px */
-            min-width: 58px;
-            height: 26px;
-            padding: 0 10px;          /* space for label */
-            gap: 6px;                 /* flag-label gap */
+            width: auto;
+            min-width: 68px;
+            height: 32px;
+            padding: 0 10px;
+            gap: 8px;
             border-radius: 10px;
             border: 1px solid transparent;
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-main);
             cursor: pointer;
-            display: inline-flex;     /* was: flex */
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s ease;
         }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.10); }
+        .lang-btn.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 242, 234, 0.15);
+            background: rgba(0, 242, 234, 0.05);
+        }
+
         .lang-text {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             color: var(--text-main);
-            line-height: 1;
+        }
+
+        /* YENİ EKLENEN BAYRAK RESMİ STİLİ */
+        .flag-img {
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         /* Chat Alanı */
@@ -320,12 +338,14 @@
             <div class="header-right">
                 <div class="lang-toggle" aria-label="Language toggle">
                     <button class="lang-btn" id="lang-tr" type="button" title="Türkçe">
-                        <span class="flag" aria-hidden="true">🇹🇷</span>
+                        <!-- Emoji yerine resim kullanıyoruz -->
+                        <img src="https://flagcdn.com/w40/tr.png" alt="TR" class="flag-img">
                         <span class="lang-text">TR</span>
                     </button>
 
                     <button class="lang-btn" id="lang-en" type="button" title="English">
-                        <span class="flag" aria-hidden="true">🇺🇸</span>
+                        <!-- Emoji yerine resim kullanıyoruz -->
+                        <img src="https://flagcdn.com/w40/us.png" alt="US" class="flag-img">
                         <span class="lang-text">EN</span>
                     </button>
                 </div>
